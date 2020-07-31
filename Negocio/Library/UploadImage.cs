@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,13 @@ namespace Negocio.Library
                 pictureBox.ImageLocation = fd.FileName;
 
             }
+        }
+
+        //Convertir la imagen a un arreglo de Bytes
+        public byte[] ImageToByte(Image img)
+        {
+            var converter = new ImageConverter();
+            return (byte[])converter.ConvertTo(img, typeof(byte[]));
         }
     }
 }
