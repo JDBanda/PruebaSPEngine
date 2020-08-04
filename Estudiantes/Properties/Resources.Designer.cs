@@ -73,6 +73,16 @@ namespace Estudiantes.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap baseline_create_white_48dp {
+            get {
+                object obj = ResourceManager.GetObject("baseline_create_white_48dp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap baseline_person_outline_black_48dp {
             get {
                 object obj = ResourceManager.GetObject("baseline_person_outline_black_48dp", resourceCulture);

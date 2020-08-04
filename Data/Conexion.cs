@@ -23,5 +23,10 @@ namespace Data
         {
             return SPEngine.ExecuteConsultSP(n, lst);
         }
+
+        public static Boolean EjecutarSP(string nombre, List<Parameter> lst)
+        {
+            return SPEngine.ExecuteSP(nombre, lst);
+        }
     }
 }

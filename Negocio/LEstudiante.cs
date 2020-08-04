@@ -4,6 +4,7 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using SPEngineCSharp;
+using System;
 
 namespace Negocio
 {
@@ -26,11 +27,10 @@ namespace Negocio
             image = (PictureBox)objetos[0];
         }
 
-        
-        public void Registrar()
+        private void validacionRegistrar()
         {
             //Se hace un recorrido por los tres campos y se comprueba que no sean vacíos
-            for (int i = 0; i < listTextBox.Count-1; i++)
+            for (int i = 1; i < listTextBox.Count - 1; i++)
             {
                 if (listTextBox[i].Text.Equals(""))
                 {
@@ -52,11 +52,60 @@ namespace Negocio
             }
         }
 
+        public Boolean Registrar()
+        {
+            //*******Validación de campos*******
+            validacionRegistrar();
+            //*******REGISTRO DE DATOS*******
+            using (IDbConnection _c = Conexion.conn())
+            {
+                List<Parameter> _Lista = new List<Parameter>();
+                _Lista.Add(new Parameter("@Nombre", listTextBox[1].Text));
+                _Lista.Add(new Parameter("@Apellido", listTextBox[2].Text));
+                _Lista.Add(new Parameter("@Email", listTextBox[3].Text));
+                return Conexion.EjecutarSP("sp_INSERT_ALUMNO", _Lista);
+            }
+        }
+
+        public Boolean Actualizar()
+        {
+            using (IDbConnection _c = Conexion.conn())
+            {
+                List<Parameter> _Lista = new List<Parameter>();
+                _Lista.Add(new Parameter("@Id", listTextBox[0].Text));
+                _Lista.Add(new Parameter("@Nombre", listTextBox[1].Text));
+                _Lista.Add(new Parameter("@Apellido", listTextBox[2].Text));
+                _Lista.Add(new Parameter("@Email", listTextBox[3].Text));
+                return Conexion.EjecutarSP("sp_UPDATE_ALUMNO", _Lista);
+            }
+        }
+
+        public Boolean Eliminar()
+        {
+            using (IDbConnection _c = Conexion.conn())
+            {
+                List<Parameter> _Lista = new List<Parameter>();
+                _Lista.Add(new Parameter("@Id", listTextBox[0].Text));
+                return Conexion.EjecutarSP("sp_DELETE_ALUMNO", _Lista);
+            }
+        }
+
         public DataTable ListadoAlumnos()
         {
             using (IDbConnection _c = Conexion.conn())
             {
                 return Conexion.Listado("sp_SELECT_ALUMNOS",null);
+            }
+        }
+
+        //Método para listar con parámetro
+        public DataTable ListadoEspecial()
+        {
+            using (IDbConnection _c = Conexion.conn())
+            {
+                List<Parameter> _Lista = new List<Parameter>();
+                _Lista.Add(new Parameter("@dominio","hotmail"));
+                return Conexion.Listado("sp_SELECT_ALUMNOS_DOMINIO_EMAIL", _Lista);
             }
         }
 
