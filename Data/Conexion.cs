@@ -19,14 +19,18 @@ namespace Data
         /*Para listar los datos de una consulta se necesita
          * 1 argumento, nombre del SP
          */
-        public static DataTable Listado(string n, List<Parameter> lst)
+
+        //Tal vez necesito crear otro objeto y pasarle la referencia
+        public static DataTable Listado(SPEngine sp)
         {
-            return SPEngine.ExecuteConsultSP(n, lst);
+            sp.Execute(ConnectionDB.SPType.Select, sp);
+            return sp.TableResponse;
         }
 
-        public static Boolean EjecutarSP(string nombre, List<Parameter> lst)
+        public static Boolean EjecutarSP(SPEngine sp)
         {
-            return SPEngine.ExecuteSP(nombre, lst);
+            sp.Execute(ConnectionDB.SPType.InsertUpdateDelete, sp);
+            return sp.Response;
         }
     }
 }

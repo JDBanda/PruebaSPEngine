@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    class dat_estudiante:StoreProcedure
+    public class dat_estudiante:StoreProcedure
     {
 
     }

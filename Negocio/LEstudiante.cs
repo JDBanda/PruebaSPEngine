@@ -63,7 +63,12 @@ namespace Negocio
                 _Lista.Add(new Parameter("@Nombre", listTextBox[1].Text));
                 _Lista.Add(new Parameter("@Apellido", listTextBox[2].Text));
                 _Lista.Add(new Parameter("@Email", listTextBox[3].Text));
-                return Conexion.EjecutarSP("sp_INSERT_ALUMNO", _Lista);
+
+                SPEngine _d = new SPEngine();
+                //Llenar el objeto
+                _d.Name = "sp_INSERT_ALUMNO";
+                _d.Parameters = _Lista;
+                return Conexion.EjecutarSP(_d);
             }
         }
 
@@ -76,7 +81,12 @@ namespace Negocio
                 _Lista.Add(new Parameter("@Nombre", listTextBox[1].Text));
                 _Lista.Add(new Parameter("@Apellido", listTextBox[2].Text));
                 _Lista.Add(new Parameter("@Email", listTextBox[3].Text));
-                return Conexion.EjecutarSP("sp_UPDATE_ALUMNO", _Lista);
+
+                SPEngine _d = new SPEngine();
+                //Llenar el objeto
+                _d.Name = "sp_UPDATE_ALUMNO";
+                _d.Parameters = _Lista;
+                return Conexion.EjecutarSP(_d);
             }
         }
 
@@ -86,7 +96,10 @@ namespace Negocio
             {
                 List<Parameter> _Lista = new List<Parameter>();
                 _Lista.Add(new Parameter("@Id", listTextBox[0].Text));
-                return Conexion.EjecutarSP("sp_DELETE_ALUMNO", _Lista);
+                SPEngine _d = new SPEngine();
+                _d.Name = "sp_DELETE_ALUMNO";
+                _d.Parameters = _Lista;
+                return Conexion.EjecutarSP(_d);
             }
         }
 
@@ -94,7 +107,10 @@ namespace Negocio
         {
             using (IDbConnection _c = Conexion.conn())
             {
-                return Conexion.Listado("sp_SELECT_ALUMNOS",null);
+                SPEngine _d = new SPEngine();
+                //Llenar el objeto
+                _d.Name = "sp_SELECT_ALUMNOS";
+                return Conexion.Listado(_d);
             }
         }
 
@@ -105,7 +121,11 @@ namespace Negocio
             {
                 List<Parameter> _Lista = new List<Parameter>();
                 _Lista.Add(new Parameter("@dominio","hotmail"));
-                return Conexion.Listado("sp_SELECT_ALUMNOS_DOMINIO_EMAIL", _Lista);
+                SPEngine _d = new SPEngine();
+                //Llenar el objeto
+                _d.Name = "sp_SELECT_ALUMNOS_DOMINIO_EMAIL";
+                _d.Parameters = _Lista;
+                return Conexion.Listado(_d);
             }
         }
 
